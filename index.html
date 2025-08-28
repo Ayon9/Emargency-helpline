@@ -7,8 +7,6 @@
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-r from-green-200 to-green-400 min-h-screen">
-
-  <!-- Navbar -->
   <nav class="flex justify-between items-center bg-white px-6 py-3 shadow">
     <div class="flex items-center gap-2">
       <img src="https://img.icons8.com/color/48/phone.png" class="w-8">
@@ -21,23 +19,14 @@
       <button id="langToggle" class="bg-yellow-400 px-3 py-1 rounded">EN</button>
     </div>
   </nav>
-
-  <!-- Hero Section -->
   <section class="text-center py-8 bg-gradient-to-r from-green-400 to-green-600 text-white">
     <img src="https://img.icons8.com/color/96/ambulance.png" class="mx-auto">
     <h2 id="heroTitle" class="text-3xl font-bold">সরকারি জরুরি সেবার নাম্বার</h2>
     <p id="heroSlogan" class="mt-2 text-lg">যে কোন বিপদে, দ্রুত যোগাযোগ করুন</p>
   </section>
-
-  <!-- Main Section -->
   <main class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-6">
-
-    <!-- Cards Section -->
     <section id="cards" class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-      <!-- Card Template -->
     </section>
-
-    <!-- History Section -->
     <section class="bg-white p-4 rounded-xl shadow">
       <div class="flex justify-between items-center">
         <h3 id="historyTitle" class="font-bold">কল হিস্ট্রি</h3>
@@ -52,7 +41,7 @@
     let hearts = 0;
     let coins = 100;
     let copies = 0;
-    let lang = "bn"; // Default Bangla
+    let lang = "bn"; 
 
     const heartCount = document.getElementById("heartCount");
     const coinCount = document.getElementById("coinCount");
@@ -61,8 +50,6 @@
     const clearHistory = document.getElementById("clearHistory");
     const langToggle = document.getElementById("langToggle");
     const cardsSection = document.getElementById("cards");
-
-    // Service Data
     const services = [
       { id:1, bn:"জাতীয় জরুরি নাম্বার", en:"National Emergency Number", num:"999", badgeBn:"জরুরি", badgeEn:"Emergency" },
       { id:2, bn:"পুলিশ হেল্পলাইন", en:"Police Helpline Number", num:"999", badgeBn:"পুলিশ", badgeEn:"Police" },
@@ -74,8 +61,6 @@
       { id:8, bn:"রেলওয়ে হেল্পলাইন", en:"Railway Helpline", num:"16465", badgeBn:"রেলওয়ে", badgeEn:"Railway" },
       { id:9, bn:"বাংলাদেশ ব্যাংক হেল্পলাইন", en:"Bangladesh Bank Helpline", num:"16236", badgeBn:"ব্যাংক", badgeEn:"Bank" }
     ];
-
-    // Render Cards
     function renderCards() {
       cardsSection.innerHTML = "";
       services.forEach(s => {
@@ -161,3 +146,4 @@
   </script>
 </body>
 </html>
+
