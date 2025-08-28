@@ -34,15 +34,12 @@
       </div>
       <ul id="historyList" class="mt-3 text-sm space-y-2"></ul>
     </section>
-
   </main>
-
   <script>
     let hearts = 0;
     let coins = 100;
     let copies = 0;
     let lang = "bn"; 
-
     const heartCount = document.getElementById("heartCount");
     const coinCount = document.getElementById("coinCount");
     const copyCount = document.getElementById("copyCount");
@@ -84,8 +81,6 @@
 
       attachEvents();
     }
-
-    // Attach Events to Buttons
     function attachEvents() {
       document.querySelectorAll(".heartBtn").forEach(btn => {
         btn.onclick = () => {
@@ -93,7 +88,6 @@
           heartCount.textContent = `💗 ${hearts}`;
         };
       });
-
       document.querySelectorAll(".copyBtn").forEach(btn => {
         btn.onclick = () => {
           const number = btn.dataset.number;
@@ -122,13 +116,9 @@
         };
       });
     }
-
-    // Clear History
     clearHistory.onclick = () => {
       historyList.innerHTML = "";
     };
-
-    // Language Toggle
     langToggle.onclick = () => {
       lang = (lang==="bn") ? "en" : "bn";
       langToggle.textContent = (lang==="bn") ? "EN" : "BN";
@@ -140,10 +130,7 @@
 
       renderCards();
     };
-
-    // Initial Render
     renderCards();
   </script>
 </body>
 </html>
-
