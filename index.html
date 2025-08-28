@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>জরুরি সেবা ডিরেক্টরি</title>
+  <script defer src="script.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-green-200 to-green-400 min-h-screen">
+
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center bg-white px-6 py-3 shadow">
+    <div class="flex items-center gap-2">
+      <img src="https://img.icons8.com/color/48/phone.png" class="w-8">
+      <h1 id="siteTitle" class="text-xl font-bold">জরুরি সেবা ডিরেক্টরি</h1>
+    </div>
+    <div class="flex items-center gap-4">
+      <span id="heartCount">💗 0</span>
+      <span id="coinCount">💰 100</span>
+      <span id="copyCount">📋 0</span>
+      <button id="langToggle" class="bg-yellow-400 px-3 py-1 rounded">EN</button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="text-center py-8 bg-gradient-to-r from-green-400 to-green-600 text-white">
+    <img src="https://img.icons8.com/color/96/ambulance.png" class="mx-auto">
+    <h2 id="heroTitle" class="text-3xl font-bold">সরকারি জরুরি সেবার নাম্বার</h2>
+    <p id="heroSlogan" class="mt-2 text-lg">যে কোন বিপদে, দ্রুত যোগাযোগ করুন</p>
+  </section>
+
+  <!-- Main Section -->
+  <main class="grid grid-cols-1 md:grid-cols-3 gap-6 px-6 py-6">
+
+    <!-- Cards Section -->
+    <section id="cards" class="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <!-- Card Template -->
+    </section>
+
+    <!-- History Section -->
+    <section class="bg-white p-4 rounded-xl shadow">
+      <div class="flex justify-between items-center">
+        <h3 id="historyTitle" class="font-bold">কল হিস্ট্রি</h3>
+        <button id="clearHistory" class="text-red-500">Clear</button>
+      </div>
+      <ul id="historyList" class="mt-3 text-sm space-y-2"></ul>
+    </section>
+
+  </main>
+
+  <script>
+    let hearts = 0;
+    let coins = 100;
+    let copies = 0;
+    let lang = "bn"; // Default Bangla
+
+    const heartCount = document.getElementById("heartCount");
+    const coinCount = document.getElementById("coinCount");
+    const copyCount = document.getElementById("copyCount");
+    const historyList = document.getElementById("historyList");
+    const clearHistory = document.getElementById("clearHistory");
+    const langToggle = document.getElementById("langToggle");
+    const cardsSection = document.getElementById("cards");
+
+    // Service Data
+    const services = [
+      { id:1, bn:"জাতীয় জরুরি নাম্বার", en:"National Emergency Number", num:"999", badgeBn:"জরুরি", badgeEn:"Emergency" },
+      { id:2, bn:"পুলিশ হেল্পলাইন", en:"Police Helpline Number", num:"999", badgeBn:"পুলিশ", badgeEn:"Police" },
+      { id:3, bn:"ফায়ার সার্ভিস", en:"Fire Service Number", num:"999", badgeBn:"ফায়ার", badgeEn:"Fire" },
+      { id:4, bn:"অ্যাম্বুলেন্স সার্ভিস", en:"Ambulance Service", num:"1994-999999", badgeBn:"অ্যাম্বুলেন্স", badgeEn:"Ambulance" },
+      { id:5, bn:"নারী ও শিশু হেল্পলাইন", en:"Women & Child Helpline", num:"109", badgeBn:"হেল্পলাইন", badgeEn:"Helpline" },
+      { id:6, bn:"অ্যান্টি করাপশন হেল্পলাইন", en:"Anti-Corruption Helpline", num:"106", badgeBn:"দুর্নীতি দমন", badgeEn:"Anti-Corruption" },
+      { id:7, bn:"বিদ্যুৎ হেল্পলাইন", en:"Electricity Helpline", num:"16216", badgeBn:"বিদ্যুৎ", badgeEn:"Electricity" },
+      { id:8, bn:"রেলওয়ে হেল্পলাইন", en:"Railway Helpline", num:"16465", badgeBn:"রেলওয়ে", badgeEn:"Railway" },
+      { id:9, bn:"বাংলাদেশ ব্যাংক হেল্পলাইন", en:"Bangladesh Bank Helpline", num:"16236", badgeBn:"ব্যাংক", badgeEn:"Bank" }
+    ];
+
+    // Render Cards
+    function renderCards() {
+      cardsSection.innerHTML = "";
+      services.forEach(s => {
+        const card = document.createElement("div");
+        card.className = "bg-white p-4 rounded-xl shadow";
+        card.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="heartBtn cursor-pointer">💗</span>
+            <span class="badge bg-green-200 text-xs px-2 py-1 rounded">${lang==="bn"?s.badgeBn:s.badgeEn}</span>
+          </div>
+          <h3 class="title text-lg font-bold mt-2">${lang==="bn"?s.bn:s.en}</h3>
+          <p class="subtitle text-sm">${lang==="bn"?s.en:s.bn}</p>
+          <p class="text-xl font-bold">${s.num}</p>
+          <div class="flex justify-between mt-3">
+            <button class="copyBtn bg-blue-500 text-white px-3 py-1 rounded" data-number="${s.num}">📋 ${lang==="bn"?"কপি":"Copy"}</button>
+            <button class="callBtn bg-green-500 text-white px-3 py-1 rounded" data-name="${lang==="bn"?s.bn:s.en}" data-number="${s.num}">📞 ${lang==="bn"?"কল":"Call"}</button>
+          </div>
+        `;
+        cardsSection.appendChild(card);
+      });
+
+      attachEvents();
+    }
+
+    // Attach Events to Buttons
+    function attachEvents() {
+      document.querySelectorAll(".heartBtn").forEach(btn => {
+        btn.onclick = () => {
+          hearts++;
+          heartCount.textContent = `💗 ${hearts}`;
+        };
+      });
+
+      document.querySelectorAll(".copyBtn").forEach(btn => {
+        btn.onclick = () => {
+          const number = btn.dataset.number;
+          navigator.clipboard.writeText(number);
+          alert((lang==="bn" ? "কপি হয়েছে: " : "Copied: ") + number);
+          copies++;
+          copyCount.textContent = `📋 ${copies}`;
+        };
+      });
+
+      document.querySelectorAll(".callBtn").forEach(btn => {
+        btn.onclick = () => {
+          if (coins < 20) {
+            alert(lang==="bn" ? "কল করার জন্য পর্যাপ্ত কয়েন নেই!" : "Not enough coins!");
+            return;
+          }
+          const name = btn.dataset.name;
+          const number = btn.dataset.number;
+          const time = new Date().toLocaleTimeString();
+          alert((lang==="bn" ? "কল হচ্ছে " : "Calling ") + `${name} (${number})`);
+          coins -= 20;
+          coinCount.textContent = `💰 ${coins}`;
+          const li = document.createElement("li");
+          li.textContent = `${name} (${number}) - ${time}`;
+          historyList.appendChild(li);
+        };
+      });
+    }
+
+    // Clear History
+    clearHistory.onclick = () => {
+      historyList.innerHTML = "";
+    };
+
+    // Language Toggle
+    langToggle.onclick = () => {
+      lang = (lang==="bn") ? "en" : "bn";
+      langToggle.textContent = (lang==="bn") ? "EN" : "BN";
+
+      document.getElementById("siteTitle").textContent = lang==="bn" ? "জরুরি সেবা ডিরেক্টরি" : "Emergency Service Directory";
+      document.getElementById("heroTitle").textContent = lang==="bn" ? "সরকারি জরুরি সেবার নাম্বার" : "Government Emergency Numbers";
+      document.getElementById("heroSlogan").textContent = lang==="bn" ? "যে কোন বিপদে, দ্রুত যোগাযোগ করুন" : "Call immediately in any danger";
+      document.getElementById("historyTitle").textContent = lang==="bn" ? "কল হিস্ট্রি" : "Call History";
+
+      renderCards();
+    };
+
+    // Initial Render
+    renderCards();
+  </script>
+</body>
+</html>
